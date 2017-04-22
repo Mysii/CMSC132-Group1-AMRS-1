@@ -1,8 +1,8 @@
 
 import java.io.*;
-
 import java.util.*;
 import java.util.regex.Pattern;
+
 public class Parser{
 	public static Stack<String[]> stacks = new Stack<String[]>();
 
@@ -18,6 +18,7 @@ public class Parser{
 				}
 				String[] data = currentLine.split(" ");									//splits by character
 				String[] inst = new String[3];
+
 				for(String str:data){
 					if(Pattern.matches("LOAD", str)){									//the character passed the regex test
 						System.out.println("LOAD");
@@ -43,10 +44,63 @@ public class Parser{
 						String[] operands = str.split(",");
 						System.out.println("operand 1: " + operands[0] + "\noperand 2: " + operands[1]);
 						inst[1] = operands[0];
+						inst[2] = operands[1];
+
+						if(Pattern.matches("LOAD", inst[0])){
+							if (Pattern.matches("^R\\d{1,2}",operands[0]) && Pattern.matches("\\d(\\d)?",operands[1])){						//immediate parser
+								System.out.println("Valid");
+							}
+							else{System.out.println("Invalid");}
+							System.out.println("\n");
+							
+						}
+
+						if(Pattern.matches("ADD", inst[0])){
+							if (Pattern.matches("^R\\d{1,2}",operands[0]) && Pattern.matches("^R\\d{1,2}",operands[1])){						//immediate parser
+								System.out.println("Valid");
+							}
+							else{System.out.println("Invalid");}
+							System.out.println("\n");
+							
+						}
+
+						if(Pattern.matches("SUB", inst[0])){
+							if (Pattern.matches("^R\\d{1,2}",operands[0]) && Pattern.matches("^R\\d{1,2}",operands[1])){						//immediate parser
+								System.out.println("Valid");
+							}
+							else{System.out.println("Invalid");}
+							System.out.println("\n");
+							
+						}
+
+						if(Pattern.matches("CMP", inst[0])){
+							if (Pattern.matches("^R\\d{1,2}",operands[0]) && Pattern.matches("^R\\d{1,2}",operands[1])){						//immediate parser
+								System.out.println("Valid");
+							}
+							else{System.out.println("Invalid");}
+							System.out.println("\n");
+							
+						}
+
+						/*
+
+						if (Pattern.matches("\\d(\\d)?",operands[0]))						//immediate parser
+							System.out.println("Immediate");
+						else if (Pattern.matches("^R\\d{1,2}",operands[0]))
+							System.out.println("Register");
+						else
+							System.out.println("Invalid operand");
+
+						inst[2] = operands[1];
+
 						if (Pattern.matches("\\d(\\d)?",operands[1]))						//immediate parser
 							System.out.println("Immediate");
-						inst[2] = operands[1];
-					}
+						else if (Pattern.matches("^R\\d{1,2}",operands[1]))
+							System.out.println("Register");
+						else
+							System.out.println("Invalid operand");
+
+						*/					}
 
 				}
 				stacks.push(inst);
@@ -59,6 +113,7 @@ public class Parser{
 
 	public static void main(String[] args) {
 		reader();
+		System.out.println("\n");
 		for (String[] e : stacks){
 			for (String s : e)
 				System.out.println(s);
